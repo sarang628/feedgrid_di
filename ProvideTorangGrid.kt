@@ -4,15 +4,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.ui.TorangGrid
+import com.sryang.library.BottomDetectingGridLazyColumn
 import com.sryang.library.pullrefresh.PullToRefreshLayout
 import com.sryang.library.pullrefresh.RefreshIndicatorState
 import com.sryang.library.pullrefresh.rememberPullToRefreshState
@@ -20,7 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProvideTorangGrid() {
+fun ProvideTorangGrid(onBottom: () -> Unit) {
     val state = rememberPullToRefreshState()
     val coroutine = rememberCoroutineScope()
     Box(
@@ -40,7 +39,28 @@ fun ProvideTorangGrid() {
             }) {
             TorangGrid(
                 modifier = Modifier.fillMaxSize(),
-                image = provideTorangAsyncImage()
+                image = provideTorangAsyncImage(),
+                onBottom = onBottom,
+                bottomDetectingLazyVerticalGrid = { modifier,
+                                                    count,
+                                                    columns,
+                                                    contentPadding,
+                                                    verticalArrangement,
+                                                    horizontalArrangement,
+                                                    onBottom,
+                                                    contents ->
+                    BottomDetectingGridLazyColumn(
+                        modifier = modifier,
+                        items = count,
+                        verticalArrangement = verticalArrangement,
+                        columns = columns,
+                        contentPadding = contentPadding,
+                        horizontalArrangement = horizontalArrangement,
+                        onBottom = onBottom
+                    ) {
+                        contents.invoke(it)
+                    }
+                }
             )
         }
     }
