@@ -15,11 +15,9 @@ import com.sryang.library.BottomDetectingGridLazyColumn
 import com.sryang.library.pullrefresh.PullToRefreshLayout
 import com.sryang.library.pullrefresh.RefreshIndicatorState
 import com.sryang.library.pullrefresh.rememberPullToRefreshState
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
-fun ProvideTorangGrid(onBottom: () -> Unit) {
+fun ProvideTorangGrid() {
     val state = rememberPullToRefreshState()
     val coroutine = rememberCoroutineScope()
     Box(
@@ -28,40 +26,43 @@ fun ProvideTorangGrid(onBottom: () -> Unit) {
             .fillMaxWidth()
     )
     {
-        PullToRefreshLayout(modifier = Modifier
-            .fillMaxSize(),
-            pullRefreshLayoutState = state,
-            onRefresh = {
-                coroutine.launch {
-                    delay(1000)
-                    state.updateState(RefreshIndicatorState.Default)
+
+        TorangGrid(
+            modifier = Modifier.fillMaxSize(),
+            image = provideTorangAsyncImage(),
+            bottomDetectingLazyVerticalGrid = { modifier,
+                                                count,
+                                                columns,
+                                                contentPadding,
+                                                verticalArrangement,
+                                                horizontalArrangement,
+                                                onBottom,
+                                                contents ->
+                BottomDetectingGridLazyColumn(
+                    modifier = modifier,
+                    items = count,
+                    verticalArrangement = verticalArrangement,
+                    columns = columns,
+                    contentPadding = contentPadding,
+                    horizontalArrangement = horizontalArrangement,
+                    onBottom = onBottom
+                ) {
+                    contents.invoke(it)
                 }
-            }) {
-            TorangGrid(
-                modifier = Modifier.fillMaxSize(),
-                image = provideTorangAsyncImage(),
-                onBottom = onBottom,
-                bottomDetectingLazyVerticalGrid = { modifier,
-                                                    count,
-                                                    columns,
-                                                    contentPadding,
-                                                    verticalArrangement,
-                                                    horizontalArrangement,
-                                                    onBottom,
-                                                    contents ->
-                    BottomDetectingGridLazyColumn(
-                        modifier = modifier,
-                        items = count,
-                        verticalArrangement = verticalArrangement,
-                        columns = columns,
-                        contentPadding = contentPadding,
-                        horizontalArrangement = horizontalArrangement,
-                        onBottom = onBottom
-                    ) {
-                        contents.invoke(it)
-                    }
+            },
+            pullToRefreshLayout = { contents, onRefresh ->
+                PullToRefreshLayout(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    pullRefreshLayoutState = state,
+                    onRefresh = onRefresh
+                ) {
+                    contents.invoke()
                 }
-            )
-        }
+            },
+            onFinishRefresh = {
+                state.updateState(refreshState = RefreshIndicatorState.Default)
+            }
+        )
     }
 }
