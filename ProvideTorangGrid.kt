@@ -35,10 +35,7 @@ fun ProvideTorangGrid() {
 
         TorangGrid(
             modifier = Modifier.fillMaxSize(),
-            image = { a, b, c, d, e ->
-                provideTorangAsyncImage()
-                    .invoke(a, b, c, d, e, null)
-            },
+            image = provideTorangAsyncImage(),
             bottomDetectingLazyVerticalGrid = { modifier,
                                                 count,
                                                 columns,
@@ -149,10 +146,7 @@ fun PreviewTorangGrid() {
     _TorangGrid(
         uiState = uiState,
         modifier = Modifier.fillMaxSize(),
-        image = { a, b, c, d, e ->
-            provideTorangAsyncImage()
-                .invoke(a, b, c, d, e, null)
-        },
+        image = provideTorangAsyncImage(),
         bottomDetectingLazyVerticalGrid = { modifier,
                                             count,
                                             columns,
