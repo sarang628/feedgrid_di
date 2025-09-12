@@ -41,7 +41,7 @@ class GetFeedGridUseCaseImpl {
         return object : LoadFeedUseCase {
             override suspend fun invoke(lastFeedId: Int) {
                 Log.d("__providesLoadFeedUseCase", "load feed by last feed id : ${lastFeedId}")
-                feedRepository.loadNextFeedByReivewId(lastFeedId)
+                feedRepository.findById(lastFeedId, count = 20)
             }
         }
     }
@@ -52,7 +52,7 @@ class GetFeedGridUseCaseImpl {
     ): RefreshFeedUseCase {
         return object : RefreshFeedUseCase {
             override suspend fun invoke() {
-                feedRepository.loadFeedWithPage(0)
+                feedRepository.findByPage(0)
             }
         }
     }
