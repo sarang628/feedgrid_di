@@ -23,12 +23,12 @@ class GetFeedGridUseCaseImpl {
         return object : GetFeedGridUseCase {
             override suspend fun invoke(): Flow<List<Pair<Int, String?>>> {
                 return feedRepository.feeds.map { feedList ->
-                    feedList.map {
+                    feedList?.map {
                         Pair(
                             it.review.reviewId,
                             BuildConfig.REVIEW_IMAGE_SERVER_URL + it.images.firstOrNull()?.pictureUrl
                         )
-                    }
+                    } ?: listOf()
                 }
             }
         }
