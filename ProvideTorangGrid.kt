@@ -121,7 +121,10 @@ fun ProvideTorangGrid() {
                     LocalFeedImageLoader provides { CustomFeedImageLoader().invoke(it) }
                 ){
                     id?.let {
-                        FeedScreenByReviewId(reviewId = it)
+                        FeedScreenByReviewId(
+                            reviewId = it,
+                            onBack = navController::popBackStack
+                        )
                     }
                 }
             }
