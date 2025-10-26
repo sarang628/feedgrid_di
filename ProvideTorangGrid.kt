@@ -100,25 +100,29 @@ fun ProvideTorangGrid() {
                     LocalTorangGridImageLoaderType provides CustomTorangGridImageLoaderType
                 ) {
                     TorangGrid(
-                        modifier    = Modifier.fillMaxSize(),
+                        modifier        = Modifier.fillMaxSize(),
+                        showLog         = true,
                         onFinishRefresh = {
                             state.updateState(refreshState = RefreshIndicatorState.Default)
                         },
-                        onClickItem = {
-                            navController.navigate("feed")
+                        onClickItem     = {
+                            navController.navigate("feed/${it}")
                         }
                     )
                 }
             }
 
-            composable("feed") {
+            composable("feed/{id}") {
+                val id = it.arguments?.getString("id")?.toIntOrNull()
                 CompositionLocalProvider(
                     LocalFeedCompose provides CustomFeedCompose,
                     LocalPullToRefreshLayoutType provides customPullToRefresh,
                     LocalExpandableTextType provides CustomExpandableTextType,
                     LocalFeedImageLoader provides { CustomFeedImageLoader().invoke(it) }
                 ){
-                    FeedScreenByReviewId(reviewId = 234)
+                    id?.let {
+                        FeedScreenByReviewId(reviewId = it)
+                    }
                 }
             }
         }
