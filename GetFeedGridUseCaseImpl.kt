@@ -1,6 +1,5 @@
 package com.sarang.torang.di.feedgrid_di
 
-import android.media.Image
 import android.util.Log
 import com.sarang.torang.BuildConfig
 import com.sarang.torang.repository.FeedRepository
@@ -42,7 +41,7 @@ class GetFeedGridUseCaseImpl {
         return object : LoadFeedUseCase {
             override suspend fun invoke(lastFeedId: Int) {
                 Log.d("__providesLoadFeedUseCase", "load feed by last feed id : ${lastFeedId}")
-                feedRepository.findById(lastFeedId, count = 20)
+                feedRepository.findById(lastFeedId)
             }
         }
     }
@@ -53,7 +52,7 @@ class GetFeedGridUseCaseImpl {
     ): RefreshFeedUseCase {
         return object : RefreshFeedUseCase {
             override suspend fun invoke() {
-                feedRepository.findByPage(0)
+                feedRepository.loadByPage(0)
             }
         }
     }
