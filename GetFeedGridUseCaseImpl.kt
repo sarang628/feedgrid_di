@@ -3,9 +3,9 @@ package com.sarang.torang.di.feedgrid_di
 import android.util.Log
 import com.sarang.torang.BuildConfig
 import com.sarang.torang.repository.FeedRepository
-import com.sarang.torang.ui.GetFeedGridUseCase
-import com.sarang.torang.ui.LoadFeedUseCase
-import com.sarang.torang.ui.RefreshFeedUseCase
+import com.sarang.torang.usecase.feedgrid.GetFeedGridUseCase
+import com.sarang.torang.usecase.feedgrid.LoadFeedUseCase
+import com.sarang.torang.usecase.feedgrid.RefreshFeedUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
