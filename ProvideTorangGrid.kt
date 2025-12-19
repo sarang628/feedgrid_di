@@ -22,20 +22,21 @@ import com.sarang.torang.compose.feed.internal.components.LocalExpandableTextTyp
 import com.sarang.torang.compose.feed.internal.components.LocalFeedImageLoader
 import com.sarang.torang.compose.feed.type.LocalFeedCompose
 import com.sarang.torang.compose.feed.type.LocalPullToRefreshLayoutType
+import com.sarang.torang.compose.feedgrid.FeedGridItemUiState
+import com.sarang.torang.compose.feedgrid.FeedGridUiState
+import com.sarang.torang.compose.feedgrid.TorangGrid
+import com.sarang.torang.compose.feedgrid.TorangGridContainer
+import com.sarang.torang.compose.feedgrid.type.BottomDetectingLazyVerticalGridType
+import com.sarang.torang.compose.feedgrid.type.LocalBottomDetectingLazyVerticalGridType
+import com.sarang.torang.compose.feedgrid.type.LocalTorangGridImageLoaderType
+import com.sarang.torang.compose.feedgrid.type.LocalTorangGridPullToRefresh
+import com.sarang.torang.compose.feedgrid.type.TorangGridImageLoaderType
+import com.sarang.torang.compose.feedgrid.type.TorangGridPullToRefreshType
 import com.sarang.torang.di.basefeed_di.CustomExpandableTextType
 import com.sarang.torang.di.basefeed_di.CustomFeedImageLoader
 import com.sarang.torang.di.feed_di.CustomFeedCompose
 import com.sarang.torang.di.feed_di.customPullToRefresh
 import com.sarang.torang.di.image.provideTorangAsyncImage
-import com.sarang.torang.compose.feedgrid.type.BottomDetectingLazyVerticalGridType
-import com.sarang.torang.compose.feedgrid.FeedGridUiState
-import com.sarang.torang.compose.feedgrid.type.LocalBottomDetectingLazyVerticalGridType
-import com.sarang.torang.compose.feedgrid.type.LocalTorangGridImageLoaderType
-import com.sarang.torang.compose.feedgrid.type.LocalTorangGridPullToRefresh
-import com.sarang.torang.compose.feedgrid.TorangGrid
-import com.sarang.torang.compose.feedgrid.TorangGridContainer
-import com.sarang.torang.compose.feedgrid.type.TorangGridImageLoaderType
-import com.sarang.torang.compose.feedgrid.type.TorangGridPullToRefreshType
 import com.sryang.library.BottomDetectingGridLazyColumn
 import com.sryang.library.pullrefresh.PullToRefreshLayout
 import com.sryang.library.pullrefresh.PullToRefreshLayoutState
@@ -153,51 +154,51 @@ fun PreviewTorangGrid() {
     val state = rememberPullToRefreshState()
     val uiState = FeedGridUiState.Success(
         listOf(
-            Pair(
+            FeedGridItemUiState(
+                reviewId = 0,
+                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
+            ),
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),
-            Pair(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            Pair(
+            FeedGridItemUiState(
                 0,
                 "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
             ),

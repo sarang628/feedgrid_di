@@ -2,10 +2,11 @@ package com.sarang.torang.di.feedgrid_di
 
 import android.util.Log
 import com.sarang.torang.BuildConfig
+import com.sarang.torang.compose.feedgrid.FeedGridItemUiState
 import com.sarang.torang.repository.FeedRepository
-import com.sarang.torang.usecase.feedgrid.GetFeedGridUseCase
-import com.sarang.torang.usecase.feedgrid.LoadFeedUseCase
-import com.sarang.torang.usecase.feedgrid.RefreshFeedUseCase
+import com.sarang.torang.usecase.feedgrid.FindAllFeedGridUseCase
+import com.sarang.torang.usecase.feedgrid.LoadFeedGridUseCase
+import com.sarang.torang.usecase.feedgrid.RefreshFeedGirdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,14 +20,14 @@ class GetFeedGridUseCaseImpl {
     @Provides
     fun providesGetFeedGridUseCase(
         feedRepository: FeedRepository
-    ): GetFeedGridUseCase {
-        return object : GetFeedGridUseCase {
-            override suspend fun invoke(): Flow<List<Pair<Int, String?>>> {
+    ): FindAllFeedGridUseCase {
+        return object : FindAllFeedGridUseCase {
+            override fun invoke(): Flow<List<FeedGridItemUiState>> {
                 return feedRepository.feeds.map { feedList ->
                     feedList?.map {
-                        Pair(
-                            it.review.reviewId,
-                            BuildConfig.REVIEW_IMAGE_SERVER_URL + it.images.firstOrNull()?.pictureUrl
+                        FeedGridItemUiState(
+                            reviewId = it.review.reviewId,
+                            imageUrl = BuildConfig.REVIEW_IMAGE_SERVER_URL + it.images.firstOrNull()?.pictureUrl
                         )
                     } ?: listOf()
                 }
@@ -37,8 +38,8 @@ class GetFeedGridUseCaseImpl {
     @Provides
     fun providesLoadFeedUseCase(
         feedRepository: FeedRepository
-    ): LoadFeedUseCase {
-        return object : LoadFeedUseCase {
+    ): LoadFeedGridUseCase {
+        return object : LoadFeedGridUseCase {
             override suspend fun invoke(lastFeedId: Int) {
                 Log.d("__providesLoadFeedUseCase", "load feed by last feed id : ${lastFeedId}")
                 feedRepository.findById(lastFeedId)
@@ -49,8 +50,8 @@ class GetFeedGridUseCaseImpl {
     @Provides
     fun providesRefreshFeedUseCase(
         feedRepository: FeedRepository
-    ): RefreshFeedUseCase {
-        return object : RefreshFeedUseCase {
+    ): RefreshFeedGirdUseCase {
+        return object : RefreshFeedGirdUseCase {
             override suspend fun invoke() {
                 feedRepository.loadByPage(0)
             }
