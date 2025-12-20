@@ -6,7 +6,6 @@ import com.sarang.torang.compose.feedgrid.FeedGridItemUiState
 import com.sarang.torang.core.database.dao.FeedGridDao
 import com.sarang.torang.repository.feed.FeedFlowRepository
 import com.sarang.torang.repository.feed.FeedLoadRepository
-import com.sarang.torang.repository.feed.FeedRepository
 import com.sarang.torang.usecase.feedgrid.FindAllFeedGridUseCase
 import com.sarang.torang.usecase.feedgrid.LoadFeedGridUseCase
 import com.sarang.torang.usecase.feedgrid.RefreshFeedGirdUseCase
