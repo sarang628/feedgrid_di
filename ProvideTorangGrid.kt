@@ -14,80 +14,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.feedgrid.FeedGridItemUiState
 import com.sarang.torang.compose.feedgrid.FeedGridUiState
 import com.sarang.torang.compose.feedgrid.TorangGrid
 import com.sarang.torang.compose.feedgrid.TorangGridContainer
-import com.sarang.torang.compose.feedgrid.type.BottomDetectingLazyVerticalGridType
 import com.sarang.torang.compose.feedgrid.type.LocalBottomDetectingLazyVerticalGridType
 import com.sarang.torang.compose.feedgrid.type.LocalTorangGridImageLoaderType
 import com.sarang.torang.compose.feedgrid.type.LocalTorangGridPullToRefresh
-import com.sarang.torang.compose.feedgrid.type.TorangGridImageLoaderType
-import com.sarang.torang.compose.feedgrid.type.TorangGridPullToRefreshType
-import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sryang.library.BottomDetectingGridLazyColumn
-import com.sryang.library.pullrefresh.PullToRefreshLayout
-import com.sryang.library.pullrefresh.PullToRefreshLayoutState
 import com.sryang.library.pullrefresh.RefreshIndicatorState
 import com.sryang.library.pullrefresh.rememberPullToRefreshState
 
-
-val CustomBottomDetectingLazyVerticalGridType : BottomDetectingLazyVerticalGridType = { data ->
-    BottomDetectingGridLazyColumn(
-    modifier                = data.modifier,
-    items                   = data.items,
-    verticalArrangement     = data.verticalArrangement,
-    columns                 = data.columns,
-    contentPadding          = data.contentPadding,
-    horizontalArrangement   = data.horizontalArrangement,
-    onBottom                = data.onBottom) {
-        data.content.invoke(it)
-    }
-}
-
-val CustomTorangGridImageLoaderType : TorangGridImageLoaderType = {
-    provideTorangAsyncImage().invoke(
-        it.modifier,
-        it.url,
-        it.iconSize,
-        it.errorIconSize,
-        it.contentScale
-    )
-}
-
-fun customTorangGridPullToRefresh(state: PullToRefreshLayoutState) : TorangGridPullToRefreshType = {
-    PullToRefreshLayout(
-        modifier                = Modifier.fillMaxSize(),
-        pullRefreshLayoutState  = state,
-        onRefresh               = it.onRefresh
-    ) {
-        it.content.invoke()
-    }
-}
-
-
 @Composable
-fun ProvideTorangGrid(onReview : (Int) -> Unit = {}) {
+fun ProvideTorangGrid(modifier: Modifier = Modifier,
+                      onReview : (Int) -> Unit = {}) {
     val state = rememberPullToRefreshState()
-    val navController = rememberNavController()
-    Box(modifier = Modifier.height(LocalConfiguration.current.screenHeightDp.dp)
-                           .fillMaxWidth()) {
-        NavHost(navController    = navController,
-                startDestination = "TorangGrid") {
-            composable("TorangGrid") {
-                CompositionLocalProvider(LocalTorangGridPullToRefresh provides customTorangGridPullToRefresh(state),
-                                         LocalBottomDetectingLazyVerticalGridType provides CustomBottomDetectingLazyVerticalGridType,
-                                         LocalTorangGridImageLoaderType provides CustomTorangGridImageLoaderType) {
-                    TorangGrid(modifier        = Modifier.fillMaxSize(),
-                               showLog         = true,
-                               onFinishRefresh = { state.updateState(refreshState = RefreshIndicatorState.Default) },
-                               onClickItem     = onReview)
-                }
-            }
-        }
+    CompositionLocalProvider(LocalTorangGridPullToRefresh provides customTorangGridPullToRefresh(state),
+        LocalBottomDetectingLazyVerticalGridType provides CustomBottomDetectingLazyVerticalGridType,
+        LocalTorangGridImageLoaderType provides CustomTorangGridImageLoaderType) {
+        TorangGrid(modifier        = modifier,
+                   showLog         = true,
+                   onFinishRefresh = { state.updateState(refreshState = RefreshIndicatorState.Default) },
+                   onClickItem     = onReview)
     }
 }
 
