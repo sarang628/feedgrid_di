@@ -6,6 +6,7 @@ import com.sryang.library.BottomDetectingGridLazyColumn
 val CustomBottomDetectingLazyVerticalGridType : BottomDetectingLazyVerticalGridType = { data ->
     BottomDetectingGridLazyColumn(
         modifier                = data.modifier,
+        listState               = data.listState,
         items                   = data.items,
         verticalArrangement     = data.verticalArrangement,
         columns                 = data.columns,
