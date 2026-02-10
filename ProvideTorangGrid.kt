@@ -29,93 +29,13 @@ fun ProvideTorangGrid(modifier  : Modifier      = Modifier,
                       listState : LazyGridState = rememberLazyGridState(),
                       onReview  : (Int) -> Unit = {}) {
     val state = rememberPullToRefreshState()
-    CompositionLocalProvider(LocalTorangGridPullToRefresh provides customTorangGridPullToRefresh(state),
-        LocalBottomDetectingLazyVerticalGridType provides CustomBottomDetectingLazyVerticalGridType,
-        LocalTorangGridImageLoaderType provides CustomTorangGridImageLoaderType) {
+    CompositionLocalProvider(
+        LocalTorangGridPullToRefresh provides customTorangGridPullToRefresh(state),
+                  LocalBottomDetectingLazyVerticalGridType provides CustomBottomDetectingLazyVerticalGridType,
+                  LocalTorangGridImageLoaderType provides CustomTorangGridImageLoaderType) {
         TorangGrid(modifier        = modifier,
                    listState       = listState,
                    onFinishRefresh = { state.updateState(refreshState = RefreshIndicatorState.Default) },
                    onClickItem     = onReview)
     }
-}
-
-@Preview
-@Composable
-fun PreviewBottomDetectingLazyGrid() {
-    BottomDetectingGridLazyColumn(
-        modifier    = Modifier.fillMaxSize(),
-        items       = 10,
-        columns     = GridCells.Fixed(3)
-    ) {
-        Box(modifier = Modifier.size(150.dp)) {
-            Text(
-                text = "aaa",
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewTorangGrid() {
-    val state = rememberPullToRefreshState()
-    val uiState = FeedGridUiState.Success(
-        listOf(
-            FeedGridItemUiState(
-                reviewId = 0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-            FeedGridItemUiState(
-                0,
-                "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_1280.jpg"
-            ),
-        ), false
-    )
-    TorangGridContainer(
-        uiState = uiState,
-        modifier = Modifier.fillMaxSize(),
-        onRefresh = {},
-        onBottom = {}
-    )
 }
