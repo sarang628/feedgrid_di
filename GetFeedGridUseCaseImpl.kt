@@ -28,9 +28,17 @@ class GetFeedGridUseCaseImpl {
             override fun invoke(): Flow<List<FeedGridItemUiState>> {
                 return feedFlowRepository.findFeedGridFlow().map { feedList ->
                     feedList.map {
+                        // .m3u8 확장자 jpg로 바꾸기
+                        val imageUrl = it.pictureUrl?.let {
+                            if (it.endsWith(".m3u8", ignoreCase = true)) {
+                                it.replaceAfterLast('.', "jpg")
+                            }
+                            else { it }
+                        } ?: ""
+
                         FeedGridItemUiState(
                             reviewId = it.reviewId,
-                            imageUrl = BuildConfig.REVIEW_IMAGE_SERVER_URL + it.pictureUrl
+                            imageUrl = BuildConfig.REVIEW_IMAGE_SERVER_URL + imageUrl
                         )
                     }
                 }
