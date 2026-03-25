@@ -17,14 +17,15 @@ import com.sryang.library.BottomDetectingGridLazyColumn
 fun PreviewBottomDetectingLazyGrid() {
     BottomDetectingGridLazyColumn(
         modifier    = Modifier.fillMaxSize(),
-        items       = 10,
         columns     = GridCells.Fixed(3)
     ) {
-        Box(modifier = Modifier.size(150.dp)) {
-            Text(
-                text = "aaa",
-                modifier = Modifier.align(Alignment.Center)
-            )
+        items(10) {
+            Box(modifier = Modifier.size(150.dp)) {
+                Text(
+                    text = "aaa",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
 }

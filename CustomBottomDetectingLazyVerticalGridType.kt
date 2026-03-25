@@ -7,12 +7,10 @@ val CustomBottomDetectingLazyVerticalGridType : BottomDetectingLazyVerticalGridT
     BottomDetectingGridLazyColumn(
         modifier                = data.modifier,
         listState               = data.listState,
-        items                   = data.items,
         verticalArrangement     = data.verticalArrangement,
         columns                 = data.columns,
         contentPadding          = data.contentPadding,
         horizontalArrangement   = data.horizontalArrangement,
-        onBottom                = data.onBottom) {
-        data.content.invoke(it)
-    }
+        onBottom                = data.onBottom,
+        content                 = data.content)
 }
